@@ -13,7 +13,7 @@ const addAlbum = async (req, res) => {
             name,
             desc,
             bgColour,
-            image: imageUpload.secre_url
+            image: imageUpload.secure_url
         }
 
         const album = albumModel(albumData);
