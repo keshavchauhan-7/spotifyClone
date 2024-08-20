@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { assets } from '../assets/assets'
 import axios from 'axios';
 import { url } from '../App';
@@ -27,7 +27,7 @@ const AddSong = () => {
             formData.append('audio', song);
             formData.append('album', album);
 
-            const response = await axios.post(`${url}/api/song/add`,formData);
+            const response = await axios.post(`${url}/api/song/add`, formData);
 
             if (response.data.success) {
                 toast.success("Song added")
@@ -43,8 +43,25 @@ const AddSong = () => {
             toast.error("error occured")
         }
         setLoading(false);
-
     }
+
+    const loadAlbumData = async () => {
+        try {
+            const response = await axios.get(`${url}/api/album/list`);
+            if (response.data.success) {
+                setAlbumData(response.data.albums);
+            }
+            else {
+                toast.error("Unable to load album data")
+            }
+        } catch (error) {
+            toast.error("Error occur")
+        }
+    }
+
+    useEffect(() => {
+        loadAlbumData();
+    }, [])
 
 
     return loading ? (
@@ -85,6 +102,7 @@ const AddSong = () => {
                 <p>Album</p>
                 <select onChange={(e) => setAlbum(e.target.value)} defaultValue={album} className='bg-transparent outline-green-600 border-2 border-gray-400 p-2.5 w-[150px]'>
                     <option value="none">None</option>
+                    {albumData.map((item, index) => (<option key={index} value={item.name}>{item.name}</option>))}
                 </select>
             </div>
 

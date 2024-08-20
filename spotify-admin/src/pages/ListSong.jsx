@@ -60,7 +60,6 @@ const ListSong = () => {
                             <p className='cursor-pointer' onClick={() => removeSong(item._id)}>x</p>
                         </div>
                     )
-
                 })}
             </div>
         </div>
