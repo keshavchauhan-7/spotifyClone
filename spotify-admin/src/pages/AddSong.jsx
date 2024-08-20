@@ -47,6 +47,7 @@ const AddSong = () => {
 
     const loadAlbumData = async () => {
         try {
+            
             const response = await axios.get(`${url}/api/album/list`);
             if (response.data.success) {
                 setAlbumData(response.data.albums);
